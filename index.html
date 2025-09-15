@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BGX Tools - Ultimate Remover Mobile</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { height:100%; font-family:Arial,sans-serif; color:#fff; overflow-x:hidden; position:relative; }
+
+/* Gradient animated background */
+body {
+  background: linear-gradient(-45deg,#0b0b0d,#3b0f66,#8a2be2,#0b0b0d);
+  background-size: 400% 400%;
+  animation:gradientBG 15s ease infinite;
+}
+@keyframes gradientBG {0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
+
+/* Particles */
+#particles {position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden;z-index:0;}
+.particle {position:absolute;width:2px;height:60px;background:rgba(138,43,226,0.2);opacity:0.5;animation:fall 5s linear infinite;}
+@keyframes fall {0%{transform:translateY(-100px);}100%{transform:translateY(110vh);}}
+
+/* Navbar */
+nav { position:fixed; top:0; left:0; width:100%; background:rgba(59,15,102,0.9); display:flex; justify-content:space-between; align-items:center; padding:1rem 2rem; z-index:1000; box-shadow:0 4px 15px rgba(0,0,0,0.3); transition:0.3s; }
+nav:hover { background:rgba(59,15,102,1); }
+nav .logo { font-weight:bold; font-size:1.5rem; color:#bb86fc; }
+nav ul { display:flex; gap:2rem; list-style:none; }
+nav ul li a { color:#fff; text-decoration:none; transition:0.3s; }
+nav ul li a:hover { color:#8a2be2; transform:scale(1.1); }
+
+/* Hamburger menu */
+.menu-toggle { display:none; flex-direction:column; cursor:pointer; gap:5px; }
+.menu-toggle span { width:25px; height:3px; background:#fff; border-radius:2px; transition:0.3s; }
+@media(max-width:768px){
+  nav ul { display:none; position:absolute; top:60px; left:0; flex-direction:column; width:100%; background:rgba(59,15,102,0.95); padding:1rem 0; }
+  nav ul.show { display:flex; }
+  .menu-toggle { display:flex; }
+}
+
+/* Footer sticky */
+footer { background:linear-gradient(90deg,#3b0f66,#8a2be2); padding:2rem; display:flex; flex-wrap:wrap; justify-content:space-between; gap:2rem; color:#fff; position:fixed; bottom:0; left:0; width:100%; z-index:1000; }
+footer .section { flex:1 1 200px; }
+footer h3 { margin-bottom:1rem; color:#bb86fc; }
+footer a:hover { color:#fff; text-decoration:underline; }
+
+/* Main content */
+main { display:flex; justify-content:center; align-items:center; height:100vh; padding-top:80px; padding-bottom:120px; position:relative; z-index:1; }
+
+/* Upload Box */
+.upload-box {
+  background:rgba(28,28,31,0.95); padding:2rem; border-radius:20px; text-align:center;
+  width:100%; max-width:500px; box-shadow:0 0 35px rgba(139,92,246,0.6),0 0 60px rgba(138,43,226,0.3);
+  transition:0.3s; position:relative; z-index:10;
+}
+.upload-box.dragover { border:2px dashed #8a2be2; }
+.upload-box h1 { margin-bottom:1rem; color:#bb86fc; font-size:2rem; }
+.upload-box p { font-size:0.9rem; opacity:0.8; margin-bottom:1rem; }
+.upload-box input[type="file"] { display:none; }
+.upload-box label { display:block; padding:1rem; background:#8a2be2; color:#fff; border-radius:12px; cursor:pointer; margin-bottom:1rem; font-weight:bold; transition:0.3s; }
+.upload-box label:hover { background:#a855f7; }
+
+/* Preview */
+.upload-box img { max-width:100%; margin-top:1rem; border-radius:15px; display:none; transition:0.5s; box-shadow:0 0 0 rgba(138,43,226,0.6); }
+
+/* Glow + sparkles effect */
+.glow { animation:glowAnim 1.5s infinite alternate; }
+@keyframes glowAnim {0%{box-shadow:0 0 15px rgba(138,43,226,0.3);}100%{box-shadow:0 0 45px rgba(138,43,226,0.8);}}
+.sparkle { position:absolute; width:4px; height:4px; background:#8a2be2; border-radius:50%; opacity:0.8; pointer-events:none; animation:twinkle 1s infinite; }
+@keyframes twinkle {0%,100%{opacity:0.8;}50%{opacity:0.1;}}
+
+/* Buttons */
+button { background: linear-gradient(90deg,#8a2be2,#bb86fc); border:none; padding:0.9rem 1.5rem; color:#fff; border-radius:50px; cursor:pointer; font-size:1rem; margin-top:1rem; margin-right:10px; display:inline-flex; align-items:center; gap:0.5rem; box-shadow:0 4px 20px rgba(138,43,226,0.5); transition:0.3s; position:relative; overflow:hidden; }
+button:hover { transform:translateY(-2px); box-shadow:0 6px 25px rgba(138,43,226,0.7); }
+.icon-magic { width:22px; height:22px; display:inline-block; background:url('data:image/svg+xml;utf8,<svg fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7M14 7l3 3m-2-4h.01M4 4h.01M4 20h.01M20 4h.01M20 20h.01"/></svg>') no-repeat center center; background-size:contain; }
+
+/* Download Button */
+#downloadBtn { background: #8a2be2; border-radius:25px; padding:0.8rem 1.5rem; box-shadow:0 4px 20px rgba(138,43,226,0.5); }
+#downloadBtn:hover { background:#a855f7; transform:translateY(-2px); box-shadow:0 6px 25px rgba(138,43,226,0.7); }
+
+/* Loader overlay */
+.loader-overlay { position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); display:flex; justify-content:center; align-items:center; border-radius:20px; display:none; }
+.loader-overlay .spinner { width:50px; height:50px; border:5px solid rgba(255,255,255,0.2); border-top:5px solid #8a2be2; border-radius:50%; animation:spin 1s linear infinite; }
+@keyframes spin {0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
+</style>
+</head>
+<body>
+
+<div id="particles"></div>
+
+<nav>
+  <div class="logo">BGX Tools</div>
+  <div class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></div>
+  <ul id="navMenu">
+    <li><a href="#remover">Remover</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<main>
+  <div class="upload-box" id="upload-box">
+    <h1 id="remover">Remover</h1>
+    <p>Drag & drop your image here or click to upload</p>
+    <label for="fileInput">Select Image</label>
+    <input type="file" id="fileInput" accept="image/*">
+    <img id="preview" alt="Image Preview">
+    <div class="loader-overlay" id="loader"><div class="spinner"></div></div>
+    <div>
+      <button id="removeBtn"><span class="icon-magic"></span>Remove Background</button>
+      <button id="downloadBtn" style="display:none;">Download Image</button>
+    </div>
+  </div>
+</main>
+
+<footer id="about">
+  <div class="section">
+    <h3>About BGX</h3>
+    <p>Smart AI Image Tools by Irtaza Graphics. Remove backgrounds, convert PNGs and more.</p>
+  </div>
+  <div class="section">
+    <h3>Quick Links</h3>
+    <ul>
+      <li><a href="#remover">Remover</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+  <div class="section">
+    <h3>Follow Us</h3>
+    <ul>
+      <li><a href="#">Instagram</a></li>
+      <li><a href="#">YouTube</a></li>
+      <li><a href="#">Twitter</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+// Hamburger toggle
+const menuToggle=document.getElementById('menuToggle');
+const navMenu=document.getElementById('navMenu');
+menuToggle.addEventListener('click',()=>{ navMenu.classList.toggle('show'); });
+
+// Prevent default drag events
+['dragenter','dragover','dragleave','drop'].forEach(eventName=>{
+  window.addEventListener(eventName,e=>{ e.preventDefault(); e.stopPropagation(); });
+});
+
+const uploadBox=document.getElementById('upload-box');
+const fileInput=document.getElementById('fileInput');
+const preview=document.getElementById('preview');
+const removeBtn=document.getElementById('removeBtn');
+const downloadBtn=document.getElementById('downloadBtn');
+const loader=document.getElementById('loader');
+let uploadedFile=null;
+let processedBlob=null;
+let sparkles=[];
+
+// Drag & drop highlight
+uploadBox.addEventListener('dragover', e=>{ uploadBox.classList.add('dragover'); });
+uploadBox.addEventListener('dragleave', e=>{ uploadBox.classList.remove('dragover'); });
+uploadBox.addEventListener('drop', e=>{
+  uploadBox.classList.remove('dragover');
+  const file=e.dataTransfer.files[0];
+  if(file) handleFile(file);
+});
+
+// File input select
+fileInput.addEventListener('change', e=>{ const file=e.target.files[0]; if(file) handleFile(file); });
+
+function handleFile(file){
+  uploadedFile=file;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    preview.src=e.target.result;
+    preview.style.display='block';
+    downloadBtn.style.display='none';
+    removeSparkles();
+  };
+  reader.readAsDataURL(file);
+}
+
+// Remove BG API
+removeBtn.addEventListener('click', async ()=>{
+  if(!uploadedFile){ alert('Upload an image first'); return; }
+  removeBtn.disabled=true; removeBtn.innerText='Removing...';
+  loader.style.display='flex';
+  preview.classList.add('glow');
+  createSparkles();
+
+  const apiKey='pb13Efz9gtzxBKXR3MW9xKSn'; // Replace with your API key
+  const formData = new FormData();
+  formData.append('image_file', uploadedFile);
+  formData.append('size','auto');
+
+  try{
+    const res = await fetch('https://api.remove.bg/v1.0/removebg',{
+      method:'POST',
+      headers:{'X-Api-Key':apiKey},
+      body:formData
+    });
+    if(!res.ok) throw new Error('API Error');
+    const blob=await res.blob();
+    processedBlob=blob;
+    const url=URL.createObjectURL(blob);
+    preview.src=url;
+    downloadBtn.style.display='inline-block';
+  }catch(err){ alert(err); }
+  finally{
+    removeBtn.disabled=false;
+    removeBtn.innerHTML='<span class="icon-magic"></span>Remove Background';
+    loader.style.display='none';
+    preview.classList.remove('glow');
+    removeSparkles();
+  }
+});
+
+// Download
+downloadBtn.addEventListener('click', ()=>{
+  if(!processedBlob) return;
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(processedBlob);
+  a.download='removed-background.png';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+});
+
+// Sparkles
+function createSparkles(){
+  removeSparkles();
+  for(let i=0;i<30;i++){
+    const s=document.createElement('div');
+    s.className='sparkle';
+    s.style.left=(preview.offsetLeft + Math.random()*preview.width)+'px';
+    s.style.top=(preview.offsetTop + Math.random()*preview.height)+'px';
+    document.body.appendChild(s);
+    sparkles.push(s);
+  }
+}
+function removeSparkles(){ sparkles.forEach(s=>document.body.removeChild(s)); sparkles=[]; }
+
+// Background particles (responsive)
+const particlesContainer=document.getElementById('particles');
+const particleCount=window.innerWidth<768?25:50;
+for(let i=0;i<particleCount;i++){
+  const p=document.createElement('div');
+  p.className='particle';
+  p.style.left=Math.random()*window.innerWidth+'px';
+  p.style.animationDelay=Math.random()*5+'s';
+  p.style.height=20+Math.random()*60+'px';
+  particlesContainer.appendChild(p);
+}
+</script>
+
+</body>
+</html>
